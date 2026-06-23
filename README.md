@@ -31,114 +31,220 @@ Capa oculta 1 (10 neuronas, ReLU)
     ↓
 Capa oculta 2 (15 neuronas, ReLU)
     ↓
-Salida (2 neuronas, Sigmoid/Linear)
+Salida (2 neuronas, Sigmoid)
 ```
 
 **Tipo**: Feedforward
-**Función de activación**: ReLU (capas ocultas), Sigmoid/Linear (salida)
-**Optimizador**: Adam o SGD
+**Función de activación**: ReLU (capas ocultas), Sigmoid (salida)
+**Optimizador**: Adam
+**Épocas**: 500
 
 ## 📁 Estructura del Proyecto
 
 ```
 prueba-red-neuronal/
-├── README.md
+├── README.md                    # Este archivo
 ├── .gitignore
-├── main.m
+├── script_completo.m           # ⭐ SCRIPT PRINCIPAL (TODO EN UNO)
+├── main.m                      # Versión antigua (opcional)
 ├── data/
-│   ├── generar_dataset.m          # Generador de datos simulados
-│   └── dataset_24h.mat            # Dataset guardado
-└── src/
-    ├── red_neuronal.m             # Definición y entrenamiento de la red
-    └── validar_modelo.m           # Validación y métricas
+│   ├── generar_dataset.m       # (Opcional - incluido en script_completo)
+│   └── dataset_24h.mat         # Se crea automáticamente
+├── src/
+│   ├── red_neuronal.m          # (Opcional - incluido en script_completo)
+│   ├── validar_modelo.m        # (Opcional - incluido en script_completo)
+│   └── resultados_validacion.mat
+└── modelo_iluminacion.mat      # Modelo guardado (se crea al finalizar)
 ```
 
-## 🚀 Cómo usar
+## 🚀 ¿CÓMO USAR? (LO MÁS IMPORTANTE)
 
-### Opción 1: Usar el script principal (Recomendado)
-```matlab
-main
-```
-Selecciona la opción que desees (generar datos, entrenar, validar o todo)
+### ⭐ OPCIÓN RECOMENDADA - Un solo script
 
-### Opción 2: Ejecutar scripts individuales
-
-1. **Generar datos**:
-   ```matlab
-   cd data
-   generar_dataset
-   cd ..
-   ```
-
-2. **Entrenar la red neuronal**:
-   ```matlab
-   cd src
-   red_neuronal
-   cd ..
-   ```
-
-3. **Validar y visualizar**:
-   ```matlab
-   cd src
-   validar_modelo
-   cd ..
-   ```
-
-## 📊 Salidas esperadas
-
-### Dataset
-- Gráficos de comportamiento de 24 horas (iluminación, tráfico, velocidad)
-- Relación entrada-salida
-- Archivo: `data/dataset_24h.mat`
-
-### Modelo
-- Evolución de la pérdida de entrenamiento
-- Comparación predicciones vs valores reales
-- Archivo: `data/modelo_red_neuronal.mat`
-
-### Validación
-- Matrices de confusión
-- Métricas: MSE, MAE, RMSE, Correlación, F1-Score
-- Gráficos de residuos y análisis de errores
-- Archivo: `src/resultados_validacion.mat`
-
-## 📈 Métricas de Rendimiento
-
-La red evalúa dos salidas independientes:
-
-1. **Control Convencional** (Clasificación binaria)
-   - Accuracy, Precision, Recall, F1-Score
-   - Matriz de Confusión
-
-2. **Intensidad Solar** (Regresión)
-   - MSE, MAE, RMSE
-   - Correlación de Pearson
-
-## 📚 Requisitos
-
-- **MATLAB** R2021b o superior
-- **Neural Network Toolbox**
-- **Signal Processing Toolbox** (opcional)
-- **Statistics and Machine Learning Toolbox** (para gráficos avanzados)
-
-## 🔧 Configuración de la Red
-
-Puedes modificar en `src/red_neuronal.m`:
+**Abre MATLAB y ejecuta:**
 
 ```matlab
-% Cambiar arquitectura
-hiddenLayerSize = [10, 15];  % Capas ocultas
-
-% Cambiar hiperparámetros
-'MaxEpochs', 500
-'MiniBatchSize', 16
-'LearnRateSchedule', 'piecewise'
+script_completo
 ```
 
-## 📝 Licencia
+¡Eso es todo! El script hará todo automáticamente:
+
+1. ✅ **Genera el dataset** (24 horas cada 15 minutos)
+2. ✅ **Entrena la red neuronal** (con progreso visual)
+3. ✅ **Valida el modelo** (calcula métricas)
+4. ✅ **Crea 4 figuras** con análisis detallados
+5. ✅ **Guarda el modelo** (opcional al final)
+
+### ⏱️ TIEMPO ESTIMADO
+
+- **Generación de datos**: ~2-3 segundos
+- **Entrenamiento**: ~30-60 segundos
+- **Validación**: ~5 segundos
+- **TOTAL**: ~1-2 minutos ⏰
+
+### 📊 QUÉ VER DURANTE LA EJECUCIÓN
+
+**Consola de MATLAB mostrará:**
+```
+╔═════════════════════════════════════════════════════════════╗
+║     RED NEURONAL PARA ILUMINACIÓN PÚBLICA INTELIGENTE       ║
+║          Script Completo: Datos - Entrenamiento - Validación║
+╚═════════════════════════════════════════════════════════════╝
+
+┌─────────────────────────────────────────────────────────────┐
+│ FASE 1: GENERANDO DATASET (24 HORAS)                       │
+└─────────────────────────────────────────────────────────────┘
+```
+
+**Se abrirán 4 ventanas con gráficos:**
+
+1. **Dataset - Análisis de 24 horas** (6 gráficos)
+   - Iluminación natural vs hora
+   - Tráfico vs hora
+   - Velocidad vs hora
+   - Control convencional
+   - Intensidad solar
+   - Relación entrada-salida
+
+2. **Resultados de Entrenamiento** (2 gráficos)
+   - Evolución de pérdida (entrenamiento vs validación)
+   - Predicciones vs valores reales
+
+3. **Análisis Detallado de Validación** (9 gráficos)
+   - Distribuciones de errores
+   - Scatter plots (real vs predicho)
+   - Errores temporales
+   - Residuos
+
+4. **Predicciones Completas** (2 gráficos)
+   - Control convencional completo
+   - Intensidad solar completa
+
+## 📈 SALIDA EN CONSOLA
+
+Al finalizar verás:
+
+```
+╔═════════════════════════════════════════════════════════════╗
+║                 RESUMEN FINAL DE RESULTADOS               ║
+╠═════════════════════════════════════════════════════════════╣
+║ SALIDA 1: CONTROL ILUMINACIÓN CONVENCIONAL                ║
+╟─────────────────────────────────────────────────────────────╢
+║ • MSE (Prueba): 0.xxx
+║ • MAE (Prueba): 0.xxx
+║ • RMSE (Prueba): 0.xxx
+║ • Correlación: 0.xxxx
+║ • Accuracy: 0.xxxx (xx.xx%)
+║ • F1-Score: 0.xxxx
+╠═════════════════════════════════════════════════════════════╣
+║ SALIDA 2: INTENSIDAD ILUMINACIÓN SOLAR                    ║
+╟─────────────────────────────────────────────────────────────╢
+║ • MSE (Prueba): 0.xxx
+║ • MAE (Prueba): 0.xxx
+║ • RMSE (Prueba): 0.xxx
+║ • Correlación: 0.xxxx
+╚═════════════════════════════════════════════════════════════╝
+
+¿Deseas guardar el modelo para uso futuro? (s/n):
+```
+
+## 🎯 ¿QUÉ SIGNIFICAN LAS MÉTRICAS?
+
+| Métrica | Rango | Interpretación |
+|---------|-------|----------------|
+| **MSE** | 0 (mejor) | Error cuadrático medio - menor es mejor |
+| **MAE** | 0 (mejor) | Error absoluto medio - menor es mejor |
+| **RMSE** | 0 (mejor) | Raíz del error cuadrático - menor es mejor |
+| **Correlación** | -1 a 1 | 1 = predicción perfecta, 0 = sin relación |
+| **Accuracy** | 0 a 1 | Porcentaje de aciertos en clasificación |
+| **F1-Score** | 0 a 1 | Balance entre precisión y recall |
+
+## 📚 REQUISITOS EN MATLAB
+
+**Asegúrate de tener instalados:**
+
+1. ✅ **Deep Learning Toolbox** (o Neural Network Toolbox)
+   ```matlab
+   % Verificar:
+   ver deep_learning
+   % O
+   ver neural_network
+   ```
+
+2. ✅ **MATLAB R2021b o superior**
+
+3. ✅ **GPU (opcional)** - Acelera el entrenamiento
+
+## 🔧 PERSONALIZAR EL SCRIPT
+
+Si quieres modificar el comportamiento, edita estas líneas en `script_completo.m`:
+
+```matlab
+% Línea ~30: Cambiar número de muestras
+horas_totales = 24;          % Cambiar a 48 para 2 días
+minutos_intervalo = 15;      % Cambiar a 30 para intervalos más largos
+
+% Línea ~138: Cambiar arquitectura de la red
+hiddenLayerSize = [10, 15];  % Cambiar a [20, 30] para red más grande
+
+% Línea ~150: Cambiar épocas de entrenamiento
+'MaxEpochs', 500,            % Cambiar a 1000 para más épocas
+'MiniBatchSize', 16,         % Cambiar a 32 para lotes más grandes
+```
+
+## ⚠️ SI ALGO SALE MAL
+
+| Error | Solución |
+|-------|----------|
+| **Toolbox no encontrado** | Instala Deep Learning Toolbox desde Add-Ons |
+| **Memoria insuficiente** | Reduce `horas_totales` o `MiniBatchSize` |
+| **Red se entrena muy lento** | Reduce `MaxEpochs` a 200 |
+| **Errores muy altos** | Aumenta `MaxEpochs` o cambia arquitectura |
+
+## 📝 GUARDAR Y CARGAR EL MODELO
+
+**Al finalizar, el script te pregunta:**
+```
+¿Deseas guardar el modelo para uso futuro? (s/n):
+```
+
+Si respondes `s` o `si`, se guarda como `modelo_iluminacion.mat`
+
+**Para cargar después:**
+```matlab
+load('modelo_iluminacion.mat', 'net');
+
+% Hacer predicción con nuevos datos
+entrada = [12, 50, 5, 80];  % Ejemplo: hora 12, ilum 50, 5 veh, vel 80
+salida = predict(net, entrada');
+```
+
+## 🎓 SOBRE EL PROYECTO
+
+**Objetivo:** Prediseño de iluminación pública eficiente usando IA
+
+**Características:**
+- ✅ Dataset simulado pero realista
+- ✅ Red neuronal con arquitectura optimizada
+- ✅ Validación rigurosa con múltiples métricas
+- ✅ Visualizaciones detalladas
+- ✅ Documentación completa
+
+## 📖 MÁS INFORMACIÓN
+
+Para entender cómo funcionan los datos:
+- Ver `script_completo.m` líneas 30-120 (generación de datos)
+- Ver `script_completo.m` líneas 130-180 (arquitectura)
+- Ver `script_completo.m` líneas 200-250 (validación)
+
+## 👨‍💼 AUTOR
+
+Proyecto académico - Iluminación Pública Eficiente con Inteligencia Artificial
+
+## 📝 LICENCIA
 
 MIT
 
 ---
 
-**Proyecto académico**: Prediseño de iluminación pública eficiente con inteligencia artificial
+**¡Listo para comenzar! Ejecuta `script_completo` en MATLAB y verás todo funcionar automáticamente.** 🚀
